@@ -52,7 +52,8 @@ function storeBookmark(e) {
         url: urlValue,
     };
     bookmarks.push(bookmark);
-    console.log(bookmarks);
+    console.log(JSON.stringify(bookmarks));
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     bookmarkForm.reset();
     websiteNameEl.focus();
 }
