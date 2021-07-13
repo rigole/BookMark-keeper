@@ -48,7 +48,7 @@ function buildBookmarks() {
         const closeIcon = document.createElement('i');
         closeIcon.classList.add('fas', 'fa-times');
         closeIcon.setAttribute('title', 'Delete Bookmark');
-        closeIcon.setAttribute('onclick', `delete('${url}')`);
+        closeIcon.setAttribute('onclick', `deleteBookmark('${url}')`);
 
         // Favicon / Link Container
         const linkInfo = document.createElement('div');
@@ -76,6 +76,8 @@ function buildBookmarks() {
 
 // Fetch Bookmarks
 function fetchBookmarks() {
+    // Remove all bookmarks elements
+    bookmarksContainer.textContent = '';
     // Get bookmarks from localStorage if available
     if (localStorage.getItem('bookmarks')){
         bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
@@ -90,6 +92,19 @@ function fetchBookmarks() {
         localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     }
     buildBookmarks();
+}
+
+// Delete Bookmark
+
+function deleteBookmark(url) {
+   bookmarks.forEach((bookmark, i) => {
+       if (bookmark.url === url){
+           bookmarks.splice(i, 1);
+       }
+   });
+// Update bookmarks array in localStorage, re-populate DOM
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    fetchBookmarks();
 }
 
 function storeBookmark(e) {
